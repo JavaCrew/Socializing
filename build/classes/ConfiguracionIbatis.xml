@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Usuario" type="com.socializing.entities.UsuarioBean" />
+		<typeAlias alias="Estado" type="com.socializing.entities.EstadoBean" />
+		<typeAlias alias="Comentario" type="com.socializing.entities.ComentarioBean" />
+		<typeAlias alias="Amistad" type="com.socializing.entities.AmistadBean" />
+		<typeAlias alias="Foto" type="com.socializing.entities.FotoBean" />
+		<typeAlias alias="ComentarioFoto" type="com.socializing.entities.ComentarioFotoBean" />
+		<typeAlias alias="Album" type="com.socializing.entities.AlbumBean" />
+		<typeAlias alias="Like" type="com.socializing.entities.LikeBean" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/socializing" />
+				<property name="username" value="root" />
+				<property name="password" value="" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="mapper.xml" />
+	</mappers>
+</configuration>
+

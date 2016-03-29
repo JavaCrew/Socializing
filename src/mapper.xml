@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="s">
+	<resultMap type="Usuario" id="UsuarioMap">
+		<id property="usuarioId" column="usuario_id" />
+		<result property="nombres" column="nombres" />
+		<result property="apellidos" column="apellidos" />
+		<result property="correo" column="correo" />
+		<result property="pwd" column="pwd" />
+		<result property="fecha_nacimiento" column="fecha_nacimiento" />
+		<result property="movil" column="movil" />
+		<result property="fijo" column="fijo" />
+		<result property="pais" column="pais" />
+		<result property="ocupacion" column="ocupacion" />
+		<result property="fecha_creacion" column="fecha_creacion" />
+		<result property="presentacion" column="presentacion" />
+		<result property="foto_perfilBytes" column="foto_perfil" />
+		<result property="foto_portadaBytes" column="foto_portada" />
+	</resultMap>
+	<resultMap type="Amistad" id="AmistadMap">
+		<id property="amistadId" column="amistad_id" />
+		<result property="usuario.usuarioId" column="usuario_id" />
+		<result property="usuario.nombres" column="usuario_nombres" />
+		<result property="usuario.apellidos" column="usuario_apellidos" />
+		<result property="usuario.foto_perfilBytes" column="usuario_foto_perfil" />
+		<result property="usuario.correo" column="usuario_correo" />
+		<result property="usuario.ocupacion" column="usuario_ocupacion" />
+		<result property="amigo.usuarioId" column="amigo_id" />
+		<result property="amigo.nombres" column="amigo_nombres" />
+		<result property="amigo.apellidos" column="amigo_apellidos" />
+		<result property="amigo.foto_perfilBytes" column="amigo_foto_perfil" />
+		<result property="amigo.correo" column="amigo_correo" />
+		<result property="amigo.ocupacion" column="amigo_ocupacion" />
+		<result property="flag" column="flag" />
+		<result property="fecha_amistad" column="fecha_amistad" />
+	</resultMap>
+	<resultMap type="Album" id="AlbumMap">
+		<id property="albumId" column="album_id" />
+		<result property="descripcion" column="descripcion" />
+		<result property="fecha_creacion" column="fecha_creacion" />
+		<association property="usuario" javaType="Usuario"
+			resultMap="UsuarioMap" column="usuario_id" />
+		<collection property="fotos" ofType="Foto" javaType="ArrayList"
+			resultMap="FotoMap" />
+	</resultMap>
+	<resultMap type="Comentario" id="ComentarioMap">
+		<id property="comentarioId" column="comentario_id" />
+		<result property="fecha_comentario" column="fecha_comentario" />
+		<result property="contenido" column="contenido" />
+		<result property="estado_comentario.estadoId" column="estado_comentario" />
+		<result property="usuario_comentario.usuarioId" column="usuario_comentario_id" />
+		<result property="usuario_comentario.nombres" column="usuario_comentario_nombres" />
+		<result property="usuario_comentario.apellidos" column="usuario_comentario_apellidos" />
+		<result property="usuario_comentario.foto_perfilBytes" column="usuario_comentario_foto_perfil" />
+	</resultMap>
+	<resultMap type="Estado" id="EstadoMap">
+		<id property="estadoId" column="estado_id" />
+		<result property="descripcion" column="descripcion" />
+		<result property="fecha_estado" column="fecha_estado" />
+		<association property="usuario_estado" javaType="Usuario"
+			resultMap="UsuarioMap" column="usuario_estado" />
+		<collection property="likes" ofType="Like" javaType="ArrayList"
+			resultMap="LikeMap" />
+		<collection property="comentarios" ofType="Comentario"
+			javaType="ArrayList" resultMap="ComentarioMap" />
+	</resultMap>
+	<resultMap type="ComentarioFoto" id="ComentarioFotoMap">
+		<id property="comentarioFotoId" column="comentario_foto_id" />
+		<result property="descripcion" column="descripcion" />
+		<result property="fecha" column="fecha" />
+		<association property="usuario_comentario_foto" column="usuario_id"
+			resultMap="UsuarioMap" />
+		<association property="foto_comentario" column="foto_id"
+			resultMap="FotoMap" />
+		<!-- <result property="foto_comentario.fotoId" column="foto_comentario" 
+			/> <result property="usuario_comentario_foto.usuarioId" column="usuario_comentario_foto_id" 
+			/> <result property="usuario_comentario_foto.nombres" column="usuario_comentario_foto_nombres" 
+			/> <result property="usuario_comentario_foto.apellidos" column="usuario_comentario_foto_apellidos" 
+			/> <result property="usuario_comentario_foto.foto_perfilBytes" column="usuario_comentario_foto_foto_perfil" 
+			/> -->
+	</resultMap>
+	<resultMap type="Foto" id="FotoMap">
+		<id property="fotoId" column="foto_id" />
+		<result property="descripcion_foto" column="descripcion_foto" />
+		<result property="fecha_creacion_foto" column="fecha_creacion_foto" />
+		<result property="fotoBytes" column="contenido" />
+		<result property="album.albumId" column="album_id" />
+	</resultMap>
+	<resultMap type="Like" id="LikeMap">
+		<id property="likeId" column="like_id" />
+		<result property="fecha_like" column="fecha_like" />
+		<result property="estado_like.estadoId" column="estado_like" />
+		<result property="usuario_like.usuarioId" column="usuario_like_id" />
+		<result property="usuario_like.nombres" column="usuario_like_nombres" />
+		<result property="usuario_like.apellidos" column="usuario_like_apellidos" />
+		<result property="usuario_like.foto_perfilBytes" column="usuario_like_foto_perfil" />
+	</resultMap>
+	<select id="SQL_CARGAR_COMENTARIOS_FOTO" parameterType="int" resultMap="ComentarioFotoMap">
+		SELECT * 
+		FROM tb_comentario_foto c
+		INNER JOIN tb_usuario u
+		ON c.usuario_id = u.usuario_id
+		WHERE foto_id = #{id}
+	</select>
+	<select id="SQL_BUSCAR_USUARIO" parameterType="int" resultMap="UsuarioMap">
+		SELECT * FROM
+		tb_usuario
+		WHERE usuario_id = #{id}
+	</select>
+	<select id="SQL_BUSCAR_AMIGOS" parameterType="java.lang.String"
+		resultMap="UsuarioMap">
+		SELECT * FROM
+		tb_usuario
+		WHERE CONCAT(nombres,' ',apellidos)
+		LIKE #{term}
+	</select>
+	<select id="SQL_CARGAR_ESTADOS_AMIGOS" parameterType="map"
+		resultMap="EstadoMap">
+		SELECT
+		*,
+		l.usuario_like as usuario_like_id,
+		s.nombres as
+		usuario_like_nombres,
+		s.apellidos as usuario_like_apellidos,
+		s.foto_perfil as usuario_like_foto_perfil,
+		c.usuario_comentario as
+		usuario_comentario_id,
+		a.nombres as usuario_comentario_nombres,
+		a.apellidos as usuario_comentario_apellidos,
+		a.foto_perfil as
+		usuario_comentario_foto_perfil
+		FROM
+		tb_estado e
+		LEFT OUTER JOIN
+		tb_usuario u ON e.usuario_estado = u.usuario_id
+		LEFT OUTER JOIN tb_like
+		l ON e.estado_id = l.estado_like
+		LEFT OUTER JOIN tb_usuario s ON
+		l.usuario_like = s.usuario_id
+		LEFT OUTER JOIN tb_comentario c ON
+		c.estado_comentario = e.estado_id
+		LEFT OUTER JOIN tb_usuario a ON
+		c.usuario_comentario = a.usuario_id
+		WHERE
+		e.usuario_estado
+		IN
+		<foreach collection="listado" item="i" open="(" separator=","
+			close=")">
+			#{i}
+		</foreach>
+		ORDER BY e.fecha_estado DESC
+	</select>
+	<insert id="SQL_ENVIAR_SOLICITUD_AMISTAD" parameterType="map">
+		INSERT
+		INTO
+		tb_amistad VALUES
+		(null, #{u}, #{a}, #{flag}, now())
+	</insert>
+	<insert id="SQL_NUEVO_COMENTARIO_FOTO" parameterType="ComentarioFoto">
+		INSERT INTO 
+		tb_comentario_foto 
+		VALUES
+		(null, #{descripcion}, curdate(), #{usuario_comentario_foto.usuarioId}, #{foto_comentario.fotoId})
+	</insert>
+	<delete id="SQL_CANCELAR_SOLICITUD_AMISTAD">
+		DELETE FROM
+		tb_amistad
+		WHERE
+		amistad_id = #{amistadId}
+	</delete>
+	<select id="SQL_BUSCAR_SOLICITUDES_AMISTAD" parameterType="int"
+		resultMap="AmistadMap">
+		SELECT
+		*,
+		u.nombres as usuario_nombres,
+		u.apellidos as
+		usuario_apellidos,
+		u.foto_perfil as usuario_foto_perfil,
+		m.nombres as
+		amigo_nombres,
+		m.apellidos as amigo_apellidos,
+		m.foto_perfil as
+		amigo_foto_perfil
+		FROM
+		tb_amistad a
+		INNER JOIN tb_usuario u ON
+		a.usuario_id = u.usuario_id
+		INNER JOIN tb_usuario m ON a.amigo_id =
+		m.usuario_id
+		WHERE
+		amigo_id = #{id}
+		AND
+		flag = 0
+	</select>
+	<update id="SQL_ACEPTAR_SOLICITUD_AMISTAD" parameterType="Amistad">
+		UPDATE
+		tb_amistad
+		SET flag = 1
+		WHERE
+		amistad_id = #{amistadId}
+	</update>
+	<select id="SQL_LOGIN" parameterType="Usuario" resultMap="UsuarioMap">
+		SELECT
+		* FROM
+		tb_usuario
+		WHERE
+		correo = #{correo} AND
+		pwd = #{pwd}
+	</select>
+	<select id="SQL_CARGAR_ESTADOS" parameterType="int" resultMap="EstadoMap">
+		SELECT * FROM
+		tb_estado
+		WHERE
+		usuario_id = #{id}
+		ORDER BY id DESC
+	</select>
+	<select id="SQL_VALIDAR_AMISTAD" parameterType="map" resultMap="AmistadMap">
+		SELECT * FROM
+		tb_amistad
+		WHERE
+		usuario_id = #{u} AND amigo_id = #{a}
+		OR
+		usuario_id = #{a} AND amigo_id = #{u}
+	</select>
+	<select id="SQL_CARGAR_AMIGOS" parameterType="int" resultMap="AmistadMap">
+		SELECT * FROM
+		tb_amistad a
+		INNER JOIN tb_usuario u ON a.amigo_id =
+		u.usuario_id
+		WHERE
+		a.flag = 1
+		AND
+		(a.usuario_id = #{id} OR a.amigo_id =
+		#{id})
+	</select>
+	<select id="SQL_CARGAR_DIRECTORIO" parameterType="int"
+		resultMap="AmistadMap">
+		SELECT
+		*,
+		u2.nombres as usuario_nombres,
+		u2.apellidos as
+		usuario_apellidos,
+		u2.foto_perfil as usuario_foto_perfil,
+		u2.ocupacion
+		as usuario_ocupacion,
+		u2.correo as usuario_correo,
+		u.nombres as
+		amigo_nombres,
+		u.apellidos as amigo_apellidos,
+		u.foto_perfil as
+		amigo_foto_perfil,
+		u.ocupacion as amigo_ocupacion,
+		u.correo as
+		amigo_correo
+		FROM
+		tb_amistad a
+		INNER JOIN tb_usuario u ON a.amigo_id =
+		u.usuario_id
+		INNER JOIN tb_usuario u2 ON a.usuario_id = u2.usuario_id
+		WHERE
+		a.flag = 1
+		AND
+		(a.usuario_id = #{id} OR
+		a.amigo_id =
+		#{id})
+	</select>
+	<select id="SQL_CARGAR_ESTADO_LIKE" parameterType="Like"
+		resultMap="EstadoMap">
+		SELECT
+		*,
+		l.usuario_like as usuario_like_id,
+		s.nombres as
+		usuario_like_nombres,
+		s.apellidos as usuario_like_apellidos,
+		s.foto_perfil as usuario_like_foto_perfil,
+		c.usuario_comentario as
+		usuario_comentario_id,
+		a.nombres as usuario_comentario_nombres,
+		a.apellidos as usuario_comentario_apellidos,
+		a.foto_perfil as
+		usuario_comentario_foto_perfil
+		FROM
+		tb_estado e
+		LEFT OUTER
+		JOIN tb_usuario
+		u ON
+		e.usuario_estado
+		=
+		u.usuario_id
+		LEFT OUTER JOIN
+		tb_like l ON
+		e.estado_id = l.estado_like
+		LEFT OUTER JOIN tb_usuario s
+		ON
+		l.usuario_like = s.usuario_id
+		LEFT OUTER JOIN tb_comentario c ON
+		c.estado_comentario = e.estado_id
+		LEFT OUTER JOIN tb_usuario a ON
+		c.usuario_comentario = a.usuario_id
+		WHERE
+		e.estado_id =
+		#{id}
+	</select>
+	<insert id="SQL_REGISTRA_USUARIO" parameterType="Usuario">
+		INSERT INTO
+		tb_usuario
+		VALUES
+		(null,
+		#{nombres},
+		#{apellidos},
+		#{correo},
+		#{pwd},
+		#{fecha_nacimiento},
+		#{movil},
+		#{fijo},
+		#{pais},
+		#{ocupacion},
+		#{fecha_creacion},
+		#{presentacion},
+		null,
+		null
+		)
+	</insert>
+	<insert id="SQL_NUEVO_ESTADO" parameterType="Estado">
+		INSERT INTO
+		tb_estado
+		VALUES
+		(null,
+		#{descripcion},
+		#{fecha_estado},
+		#{usuario_estado.usuarioId}
+		)
+	</insert>
+	<insert id="SQL_NUEVO_COMENTARIO" parameterType="Comentario">
+		INSERT INTO
+		tb_comentario
+		VALUES
+		(null,
+		now(),
+		#{contenido},
+		#{estado_comentario.estadoId},
+		#{usuario_comentario.usuarioId}
+		)
+	</insert>
+	<insert id="SQL_NUEVA_FOTO" parameterType="Foto">
+		INSERT INTO
+		tb_foto
+		VALUES
+		(null,
+		#{descripcion_foto},
+		#{fecha_creacion_foto},
+		#{fotoBytes},
+		#{album.albumId}
+		)
+	</insert>
+	<insert id="SQL_NUEVO_ALBUM" parameterType="Album">
+		INSERT INTO
+		tb_album
+		VALUES
+		(null,
+		#{descripcion},
+		#{fecha_creacion},
+		#{usuario.usuarioId}
+		)
+	</insert>
+	<insert id="SQL_LIKE" parameterType="Like">
+		INSERT INTO
+		tb_like
+		VALUES
+		(null,
+		#{usuario_like.usuarioId},
+		#{estado_like.estadoId},
+		#{fecha_like}
+		)
+	</insert>
+	<delete id="SQL_DISLIKE" parameterType="int">
+		DELETE FROM
+		tb_like
+		WHERE
+		like_id = #{likeId}
+	</delete>
+	<update id="SQL_NUEVA_FOTO_PERFIL" parameterType="Usuario">
+		UPDATE
+		tb_usuario
+		SET
+		foto_perfil = #{foto_perfilBytes}
+		WHERE
+		usuario_id =
+		#{usuarioId}
+	</update>
+	<update id="SQL_NUEVA_FOTO_PORTADA" parameterType="Usuario">
+		UPDATE
+		tb_usuario
+		SET
+		foto_portada =
+		#{foto_portadaBytes}
+		WHERE
+		usuario_id =
+		#{usuarioId}
+	</update>
+	<select id="SQL_CARGAR_GALERIA" parameterType="int" resultMap="AlbumMap">
+		SELECT
+		*
+		FROM
+		tb_album a
+		LEFT JOIN
+		tb_foto f
+		ON f.album_id = a.album_id
+		INNER JOIN
+		tb_usuario u
+		ON u.usuario_id =
+		a.usuario_id
+		WHERE
+		a.usuario_id =
+		#{id}
+	</select>
+	<select id="SQL_CARGAR_FOTOS_X_GALERIA" parameterType="map"
+		resultMap="FotoMap">
+		SELECT
+		*
+		FROM
+		tb_album a
+		INNER JOIN
+		tb_foto f
+		ON f.album_id =
+		a.album_id
+		WHERE
+		a.usuario_id = #{id}
+		AND
+		f.album_id = #{id_album}
+	</select>
+</mapper>

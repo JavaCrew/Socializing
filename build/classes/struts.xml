@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.custom.i18n.resources" value="global" />
+	<constant name="struts.action.excludePattern" value=".*/static/.*" />
+	<package name="s" extends="struts-default,json-default,tiles-default"
+		namespace="/">
+		<action name="*Link" method="{1}"
+			class="com.socializing.actions.LinkAction">
+			<result name="inicio" type="tiles">t_inicio</result>
+			<result name="perfil" type="tiles">t_perfil</result>
+			<result name="auto_perfil" type="tiles">t_auto_perfil</result>
+			<result name="amigos" type="tiles">t_amigos</result>
+			<result name="fotos" type="tiles">t_fotos</result>
+			<result name="edicion" type="tiles">t_edicion</result>
+		</action>
+		<action name="subirFotoPerfil" class="com.socializing.actions.FotoAction">
+			<interceptor-ref name="basicStack" />
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/jpeg,image/gif,image/jpg,image/png</param>
+			</interceptor-ref>
+			<interceptor-ref name="params">
+				<param name="excludeParams">dojo\..*,^struts\..*</param>
+			</interceptor-ref>
+			<interceptor-ref name="validation">
+				<param name="excludeMethods">input,back,cancel,browse</param>
+			</interceptor-ref>
+			<interceptor-ref name="workflow">
+				<param name="excludeMethods">input,back,cancel,browse</param>
+			</interceptor-ref>
+			<result name="input">t_inicio</result>
+			<result name="success" type="tiles">t_inicio</result>
+		</action>
+		<action name="subirFotoPortada" class="com.socializing.actions.FotoAction"
+			method="NuevaFotoPortada">
+			<result name="input">/pages/resultado.jsp</result>
+			<result name="success" type="tiles">t_auto_perfil</result>
+		</action>
+		<action name="subirFoto" class="com.socializing.actions.FotoAction"
+			method="NuevaFoto">
+			<result name="input">/pages/resultado.jsp</result>
+			<result name="success" type="tiles">t_fotos</result>
+		</action>
+	</package>
+</struts>

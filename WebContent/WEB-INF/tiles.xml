@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="t_main" template="/templates/layout.jsp">
+		<put-attribute name="header" value="/templates/header.jsp" />
+		<put-attribute name="menu" value="/templates/menu.jsp" />
+		<put-attribute name="content" value="/templates/default-content.jsp" />
+	</definition>
+	<definition name="t_inicio" extends="t_main">
+		<put-attribute name="content" value="/pages/inicio.jsp" />
+	</definition>
+	<definition name="t_perfil" extends="t_main">
+		<put-attribute name="content" value="/pages/perfil.jsp" />
+	</definition>
+	<definition name="t_auto_perfil" extends="t_main">
+		<put-attribute name="content" value="/pages/auto_perfil.jsp" />
+	</definition>
+	<definition name="t_amigos" extends="t_main">
+		<put-attribute name="content" value="/pages/amigos.jsp" />
+	</definition>
+	<definition name="t_fotos" extends="t_main">
+		<put-attribute name="content" value="/pages/fotos.jsp" />
+	</definition>
+	<definition name="t_albumes" extends="t_main">
+		<put-attribute name="content" value="/pages/album.jsp" />
+	</definition>		
+</tiles-definitions>
