@@ -42,6 +42,23 @@
 			return this.optional(element) || /^[a-z]+$/i.test(value);
 		}, "¡Ingresa Sólo Letras!");
 
+		$.validator.addMethod("legal_age", function(value, element) {
+
+			var day = $("#fecnac").val().split("-")[2];
+			var month = $("#fecnac").val().split("-")[1];
+			var year = $("#fecnac").val().split("-")[0];
+			var age = 18;
+
+			var mydate = new Date();
+			mydate.setFullYear(year, month - 1, day);
+
+			var currdate = new Date();
+			currdate.setFullYear(currdate.getFullYear() - age);
+
+			return currdate > mydate;
+
+		}, "¡Debes Tener Por Lo Menos 18 Años De Edad!");
+
 		$("#fRegistro").validate({
 			rules : {
 				"u.nombres" : {
@@ -56,6 +73,9 @@
 				"u.pwd" : "required",
 				"re_pwd" : {
 					equalTo : "#pwd"
+				},
+				"u.fecha_nacimiento" : {
+					legal_age : true
 				}
 			},
 			messages : {
@@ -118,10 +138,11 @@
 					id="pwd" name="u.pwd" class="form-control" placeholder="Contraseña"
 					required /> <input type="text" name="re_pwd" class="form-control"
 					placeholder="Confirmar Contraseña" />
-				<jq:datepicker placeholder="Fecha de Nacimiento"
+				<jq:datepicker id="fecnac" placeholder="Fecha de Nacimiento"
 					cssClass="form-control" name="u.fecha_nacimiento" showOn="focus"
 					displayFormat="yy-mm-dd" changeMonth="true" changeYear="true"
-					showAnim="slideDown" duration="slow" value="today" yearRange="1905:2016" maxDate="0"/>
+					showAnim="slideDown" duration="slow" value="today"
+					yearRange="1905:2016" maxDate="0" />
 				<input id="btnRegistro" class="btn btn-lg btn-login btn-block"
 					type="submit" value="¡Terminé!" />
 				<div class="registration">
