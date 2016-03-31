@@ -33,22 +33,42 @@
 <link
 	href="${pageContext.request.contextPath}/flatlab/css/style-responsive.css"
 	rel="stylesheet" />
-<jq:head jqueryui="true" jquerytheme="flick"/>
+<jq:head jqueryui="true" jquerytheme="flick" />
 <script
 	src="${pageContext.request.contextPath}/flatlab/assets/jquery-validate/dist/jquery.validate.js"></script>
 <script type="text/javascript">
 	$(function() {
+		jQuery.validator.addMethod("lettersonly", function(value, element) {
+			return this.optional(element) || /^[a-z]+$/i.test(value);
+		}, "¡Ingresa Sólo Letras!");
+
 		$("#fRegistro").validate({
 			rules : {
+				"u.nombres" : {
+					lettersonly : true
+				},
+				"u.apellidos" : {
+					lettersonly : true
+				},
+				"u.correo" : {
+					email : true
+				},
 				"u.pwd" : "required",
 				"re_pwd" : {
 					equalTo : "#pwd"
 				}
 			},
 			messages : {
-				"u.nombres" : "¡Ingresa Tus Nombres!",
-				"u.apellidos" : "¡Ingresa Tus Apellidos!",
-				"u.correo" : "¡Ingresa Tu ID!",
+				"u.nombres" : {
+					required : "¡Ingresa Tus Nombres!"
+				},
+				"u.apellidos" : {
+					required : "¡Ingresa Tus Apellidos!"
+				},
+				"u.correo" : {
+					required : "¡Ingresa Tu ID!",
+					email : "¡Ingresa Una Dirección Válida!"
+				},
 				"u.pwd" : "¡Ingresa Tu Password!",
 				"re_pwd" : "¡Ingresa El Mismo Password De Nuevo!"
 			}
@@ -101,7 +121,7 @@
 				<jq:datepicker placeholder="Fecha de Nacimiento"
 					cssClass="form-control" name="u.fecha_nacimiento" showOn="focus"
 					displayFormat="yy-mm-dd" changeMonth="true" changeYear="true"
-					showAnim="slideDown" duration="slow" />
+					showAnim="slideDown" duration="slow" value="today" yearRange="1905:2016" maxDate="0"/>
 				<input id="btnRegistro" class="btn btn-lg btn-login btn-block"
 					type="submit" value="¡Terminé!" />
 				<div class="registration">
