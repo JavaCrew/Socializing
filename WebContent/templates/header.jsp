@@ -183,7 +183,7 @@
 					</ul></li>
 				<!-- Inbox End -->
 				<!-- Solicitudes Start -->
-				<li class="dropdown"><a style="background-color: white;"
+				<li class="dropdown"><a style="background-color: white; display:none;"
 					data-toggle="dropdown" class="dropdown-toggle" href="#"
 					aria-expanded="true"> <i class="fa fa-inbox"></i> <span
 						class="badge bg-success">0</span>
@@ -210,7 +210,7 @@
 					</ul></li>
 				<!-- Solicitudes End -->
 				<!-- Notification Start-->
-				<li id="header_notification_bar" class="dropdown"><a
+				<li id="header_notification_bar" class="dropdown" style="display:none;"><a
 					style="background-color: white;" data-toggle="dropdown"
 					class="dropdown-toggle" href="#" aria-expanded="false"> <i
 						class="fa fa-bell-o"></i> <span class="badge bg-warning">0</span>
@@ -252,9 +252,9 @@
 				</a>
 					<ul class="dropdown-menu extended logout animated flipInX">
 						<div class="log-arrow-up"></div>
-						<li><a href="#"><i class=" fa fa-suitcase"></i>Perfil</a></li>
-						<li><a href="#"><i class="fa fa-cog"></i> Configuración</a></li>
-						<li><a href="#"><i class="fa fa-bell-o"></i>
+						<li style="width:50%;"><a href="<s:url action="auto_perfilLink"/>"><i class=" fa fa-suitcase"></i>Perfil</a></li>
+						<li style="width:50%;"><a href="#"><i class="fa fa-cog"></i> Configuración</a></li>
+						<li style="display:none;"><a href="#"><i class="fa fa-bell-o"></i>
 								Notificaciones</a></li>
 						<li><a href="<s:url value="logout" />"><i
 								class="fa fa-key"></i> Cerrar Session</a></li>

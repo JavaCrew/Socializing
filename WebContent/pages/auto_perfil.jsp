@@ -19,7 +19,7 @@
 <div class="animated slideInDown">
 	<!-- page start-->
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<section class="panel">
 				<div class="cover-photo">
 					<div class="fb-timeline-img">
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="panel">
+			<!--<section class="panel">
 				<div class="panel-body">
 					<div class="fb-user-thumb">
 						<img src="flatlab/img/pro-ac-1.png" alt="">
@@ -218,9 +218,9 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
-			</section>
+			</section>-->
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-3" style="display:none;">
 			<div class="fb-timeliner">
 				<h2 class="recent-highlight">Recent</h2>
 				<ul>
