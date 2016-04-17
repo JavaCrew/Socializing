@@ -39,8 +39,12 @@
 <script type="text/javascript">
 	$(function() {
 		jQuery.validator.addMethod("lettersonly", function(value, element) {
+<<<<<<< HEAD
 			return this.optional(element)
 					|| /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/i.test(value);
+=======
+			return this.optional(element) || /^[a-z ]+$/i.test(value);
+>>>>>>> origin/master
 		}, "¡Ingresa Sólo Letras!");
 
 		$.validator.addMethod("legal_age", function(value, element) {
