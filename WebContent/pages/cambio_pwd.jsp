@@ -19,14 +19,14 @@
 	$(function() {
 		$("#fCambioPwd").validate({
 			rules : {
-				"neo_pwd" : "required",
+				"u.pwd" : "required",
 				"re_pwd" : {
 					equalTo : "#pwd"
 				}
 			},
 			messages : {
-				"u.pwd" : "¡Ingresa Tu Password!",
-				"neo_pwd" : "¡Ingresa Un Nuevo Password!",
+				"#current_pwd" : "¡Ingresa Tu Password!",
+				"u.pwd" : "¡Ingresa Un Nuevo Password!",
 				"re_pwd" : "¡Ingresa El Mismo Password De Nuevo!"
 			}
 		});
@@ -54,7 +54,7 @@
 														"disabled");
 											} else {
 												$("#btnEdicion").addClass(
-												"disabled");
+														"disabled");
 												toastr
 														.warning(
 																"Para Activar El Botón De Guardar Tus Cambios.",
@@ -80,15 +80,16 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Password Actual</label> <input class="form-control"
-									type="hidden" name="u.usuarioId" /> <input
-									class="form-control" id="current_pwd" type="text" name="u.pwd"
+									type="hidden" name="u.usuarioId"
+									value="<s:property value="usuarioId" />" /> <input
+									class="form-control" id="current_pwd" type="text"
 									required />
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Nueva Contraseña</label> <input id="pwd"
-									class="form-control" name="neo_pwd" type="password" />
+									class="form-control" name="u.pwd" type="password" />
 							</div>
 						</div>
 						<div class="col-md-12">

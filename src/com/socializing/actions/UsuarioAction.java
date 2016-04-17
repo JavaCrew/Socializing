@@ -78,7 +78,6 @@ public class UsuarioAction extends ActionSupport {
 	private int num_amigos;
 	private int num_estados;
 	private int flag2;
-	
 
 	@Action(value = "/login", results = { @Result(location = "t_inicio", name = "success", type = "tiles"),
 			@Result(location = "/index.jsp", name = "login") })
@@ -315,6 +314,13 @@ public class UsuarioAction extends ActionSupport {
 	public String ValidarPassword() throws Exception {
 		log.info("En Validar Password - USUARIOACTION");
 		flag2 = service.ValidarPassword(u);
+		return SUCCESS;
+	}
+
+	@Action(value = "/cambiarPassword", results = { @Result(name = "success", location = "/index.jsp") })
+	public String CambiarPassword() throws Exception {
+		log.info("En CambiarPassword - USUARIOACTION");
+		service.CambiarPassword(u);
 		return SUCCESS;
 	}
 

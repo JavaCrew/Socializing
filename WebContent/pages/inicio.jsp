@@ -196,7 +196,6 @@
 					</a>
 				</div>
 				<div class="weather-category twt-category">
-<<<<<<< HEAD
 					<s:url id="uConteo" value="conteo" />
 					<jq:div id="rConteo" href="%{uConteo}" indicator="indicator"
 						dataType="json" onSuccessTopics="tpConteo">
@@ -220,19 +219,6 @@
 							</li>
 						</ul>
 					</jq:div>
-=======
-					<ul>
-						<li class="active">
-							<h5>0</h5> Mindbits
-						</li>
-						<li>
-							<h5>0</h5> Amigos
-						</li>
-						<li>
-							<h5>0</h5> Seguidores
-						</li>
-					</ul>
->>>>>>> origin/master
 				</div>
 				<s:form id="fMindbit" method="POST" action="nuevoEstado">
 					<div class="twt-write col-sm-12">
@@ -251,7 +237,7 @@
 							value="¡Publicar!" />
 					</footer>
 				</s:form>
-				<ul class="nav nav-pills nav-stacked" style="display:none;">
+				<ul class="nav nav-pills nav-stacked" style="display: none;">
 					<li><a href="javascript:;"> <i class="fa fa-clock-o"></i>
 							Inbox <span class="label label-primary pull-right r-activity">19</span></a></li>
 					<li><a href="javascript:;"> <i class="fa fa-calendar"></i>

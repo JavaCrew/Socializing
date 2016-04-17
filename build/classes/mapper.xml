@@ -485,6 +485,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET
 		pwd = #{pwd}
 		WHERE
-		usuario_id = #{id}
+		usuario_id = #{usuarioId}
 	</update>
 </mapper>
