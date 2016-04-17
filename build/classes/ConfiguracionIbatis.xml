@@ -9,7 +9,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="Comentario" type="com.socializing.entities.ComentarioBean" />
 		<typeAlias alias="Amistad" type="com.socializing.entities.AmistadBean" />
 		<typeAlias alias="Foto" type="com.socializing.entities.FotoBean" />
-		<typeAlias alias="ComentarioFoto" type="com.socializing.entities.ComentarioFotoBean" />
+		<typeAlias alias="ComentarioFoto"
+			type="com.socializing.entities.ComentarioFotoBean" />
 		<typeAlias alias="Album" type="com.socializing.entities.AlbumBean" />
 		<typeAlias alias="Like" type="com.socializing.entities.LikeBean" />
 	</typeAliases>
@@ -18,15 +19,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			<transactionManager type="JDBC" />
 			<dataSource type="UNPOOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-<<<<<<< HEAD
 				<property name="url" value="jdbc:mysql://localhost:3306/socializing" />
 				<property name="username" value="root" />
 				<property name="password" value="" />
-=======
-				<property name="url" value="jdbc:mysql://us-cdbr-azure-southcentral-e.cloudapp.net:3306/socializing" />
-				<property name="username" value="bfd644c0856af1" />
-				<property name="password" value="2a501c84" />
->>>>>>> origin/master
 			</dataSource>
 		</environment>
 	</environments>
