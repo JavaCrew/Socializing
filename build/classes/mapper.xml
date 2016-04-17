@@ -98,11 +98,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="usuario_like.apellidos" column="usuario_like_apellidos" />
 		<result property="usuario_like.foto_perfilBytes" column="usuario_like_foto_perfil" />
 	</resultMap>
-	<select id="SQL_CARGAR_COMENTARIOS_FOTO" parameterType="int" resultMap="ComentarioFotoMap">
-		SELECT * 
+	<select id="SQL_CARGAR_COMENTARIOS_FOTO" parameterType="int"
+		resultMap="ComentarioFotoMap">
+		SELECT *
 		FROM tb_comentario_foto c
 		INNER JOIN tb_usuario u
-		ON c.usuario_id = u.usuario_id
+		ON
+		c.usuario_id =
+		u.usuario_id
 		WHERE foto_id = #{id}
 	</select>
 	<select id="SQL_BUSCAR_USUARIO" parameterType="int" resultMap="UsuarioMap">
@@ -160,10 +163,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(null, #{u}, #{a}, #{flag}, now())
 	</insert>
 	<insert id="SQL_NUEVO_COMENTARIO_FOTO" parameterType="ComentarioFoto">
-		INSERT INTO 
-		tb_comentario_foto 
+		INSERT INTO
+		tb_comentario_foto
 		VALUES
-		(null, #{descripcion}, curdate(), #{usuario_comentario_foto.usuarioId}, #{foto_comentario.fotoId})
+		(null, #{descripcion}, curdate(),
+		#{usuario_comentario_foto.usuarioId}, #{foto_comentario.fotoId})
 	</insert>
 	<delete id="SQL_CANCELAR_SOLICITUD_AMISTAD">
 		DELETE FROM
@@ -432,4 +436,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND
 		f.album_id = #{id_album}
 	</select>
+	<select id="SQL_CONTAR_AMIGOS" parameterType="int" resultType="int">
+		SELECT
+		*
+		FROM
+		tb_amistad
+		WHERE
+		usuario_id = #{id}
+	</select>
+	<select id="SQL_CONTAR_ESTADOS" parameterType="int" resultType="int">
+		SELECT
+		*
+		FROM
+		tb_estado
+		WHERE
+		usuario_estado = #{id}
+	</select>
+	<update id="SQL_EDITAR_PERFIL" parameterType="Usuario">
+		UPDATE
+		tb_usuario
+		SET
+		nombres = #{nombres},
+		apellidos = #{apellidos},
+		correo = #{correo},
+		fecha_nacimiento = #{fecha_nacimiento},
+		movil = #{movil},
+		fijo =
+		#{fijo},
+		pais = #{pais},
+		ocupacion = #{ocupacion},
+		presentacion =
+		#{presentacion}
+		WHERE
+		usuario_id = #{usuarioId}
+	</update>
+	<select id="SQL_VALIDAR_PASSWORD" parameterType="Usuario" resultMap="UsuarioMap">
+		SELECT
+		*
+		FROM
+		tb_usuario
+		WHERE
+		usuario_id = #{usuarioId} AND
+		pwd = #{pwd}
+	</select>
+	<update id="SQL_CAMBIAR_PASSWORD" parameterType="Usuario">
+		UPDATE
+		tb_usuario
+		SET
+		pwd = #{pwd}
+		WHERE
+		usuario_id = #{id}
+	</update>
 </mapper>

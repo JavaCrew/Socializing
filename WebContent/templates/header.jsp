@@ -252,12 +252,13 @@
 				</a>
 					<ul class="dropdown-menu extended logout animated flipInX">
 						<div class="log-arrow-up"></div>
-						<li><a href="#"><i class=" fa fa-suitcase"></i>Perfil</a></li>
-						<li><a href="#"><i class="fa fa-cog"></i> Configuración</a></li>
+						<li><a href="#"><i class=" fa fa-suitcase"></i>Agenda</a></li>
+						<li><a href="<s:url action="cambio_passwordLink"/>"><i
+								class="fa fa-cog"></i> Password</a></li>
 						<li><a href="#"><i class="fa fa-bell-o"></i>
 								Notificaciones</a></li>
 						<li><a href="<s:url value="logout" />"><i
-								class="fa fa-key"></i> Cerrar Session</a></li>
+								class="fa fa-key"></i> Cerrar Sessión</a></li>
 					</ul></li>
 				<!-- <li class="sb-toggle-right"><i class="fa  fa-align-right"></i></li> -->
 				<!-- user login dropdown end -->

@@ -21,7 +21,7 @@ import com.socializing.entities.LikeBean;
 import com.socializing.entities.UsuarioBean;
 import com.socializing.util.Constantes;
 
-public class UsuarioDAOImp implements UsuarioDAO {	
+public class UsuarioDAOImp implements UsuarioDAO {
 	SqlSessionFactory sqlMapper = null;
 	{
 		String archivo = "ConfiguracionIbatis.xml";
@@ -49,12 +49,12 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")	
+	@SuppressWarnings("unchecked")
 	public ArrayList<EstadoBean> CargarEstados(int id) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<EstadoBean> listado = null;
 		try {
-			listado =  (ArrayList<EstadoBean>)session.selectList("s.SQL_CARGAR_ESTADOS", id);
+			listado = (ArrayList<EstadoBean>) session.selectList("s.SQL_CARGAR_ESTADOS", id);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,7 +70,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<AmistadBean> listado = null;
 		try {
-			listado =  (ArrayList<AmistadBean>)session.selectList("s.SQL_CARGAR_AMIGOS", id);
+			listado = (ArrayList<AmistadBean>) session.selectList("s.SQL_CARGAR_AMIGOS", id);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,12 +82,11 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public ArrayList<EstadoBean> CargarEstadosAmigos(Map<String, Object> map)
-			throws Exception {
+	public ArrayList<EstadoBean> CargarEstadosAmigos(Map<String, Object> map) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<EstadoBean> listado = null;
-		try {		
-			listado =  (ArrayList<EstadoBean>)session.selectList("s.SQL_CARGAR_ESTADOS_AMIGOS", map);		
+		try {
+			listado = (ArrayList<EstadoBean>) session.selectList("s.SQL_CARGAR_ESTADOS_AMIGOS", map);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,25 +100,8 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	public int RegistrarUsuario(UsuarioBean bean) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		int flag = 0;
-		try {		
-			flag = session.insert("s.SQL_REGISTRA_USUARIO",bean);
-			session.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return flag;	
-	}
-
-
-	@Override
-	public int NuevaFoto(FotoBean bean) throws Exception {
-		SqlSession session = sqlMapper.openSession();
-		int flag = 0;
-		try {	
-			bean.setFotoBytes(Constantes.getBytesFromFile(bean.getFoto()));
-			flag = session.insert("s.SQL_NUEVA_FOTO",bean);
+		try {
+			flag = session.insert("s.SQL_REGISTRA_USUARIO", bean);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,49 +112,43 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	}
 
 	@Override
-	public int ActualizarUsuario(UsuarioBean bean) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int NuevaFoto(FotoBean bean) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		int flag = 0;
+		try {
+			bean.setFotoBytes(Constantes.getBytesFromFile(bean.getFoto()));
+			flag = session.insert("s.SQL_NUEVA_FOTO", bean);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return flag;
 	}
 
 	@Override
 	public int NuevoEstado(EstadoBean bean) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		int flag = 0;
-		try {		
-			flag = session.insert("s.SQL_NUEVO_ESTADO",bean);
+		try {
+			flag = session.insert("s.SQL_NUEVO_ESTADO", bean);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-		return flag;	
+		return flag;
 	}
 
 	@Override
 	public int NuevaFotoPerfil(UsuarioBean bean) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		int flag = 0;
-		try {		
+		try {
 			bean.setFoto_perfilBytes(Constantes.getBytesFromFile(bean.getFoto_perfil()));
-			flag = session.insert("s.SQL_NUEVA_FOTO_PERFIL",bean);
-			session.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return flag;
-	}	
-
-	@Override
-	public int NuevaFotoPortada(UsuarioBean bean) throws Exception {
-		SqlSession session = sqlMapper.openSession();
-		int flag = 0;
-		try {			
-			bean.setFoto_portadaBytes(Constantes.getBytesFromFile(bean.getFoto_portada()));
-			flag = session.insert("s.SQL_NUEVA_FOTO_PORTADA",bean);
+			flag = session.insert("s.SQL_NUEVA_FOTO_PERFIL", bean);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -183,12 +159,28 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")	
+	public int NuevaFotoPortada(UsuarioBean bean) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		int flag = 0;
+		try {
+			bean.setFoto_portadaBytes(Constantes.getBytesFromFile(bean.getFoto_portada()));
+			flag = session.insert("s.SQL_NUEVA_FOTO_PORTADA", bean);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return flag;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
 	public ArrayList<AlbumBean> CargarGaleria(int id) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<AlbumBean> listado = null;
-		try {		
-			listado =  (ArrayList<AlbumBean>)session.selectList("s.SQL_CARGAR_GALERIA",id);		
+		try {
+			listado = (ArrayList<AlbumBean>) session.selectList("s.SQL_CARGAR_GALERIA", id);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,15 +194,15 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	public int NuevoAlbum(AlbumBean bean) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		int flag = 0;
-		try {		
-			flag = session.insert("s.SQL_NUEVO_ALBUM",bean);
-			session.commit();			
+		try {
+			flag = session.insert("s.SQL_NUEVO_ALBUM", bean);
+			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-		return flag;	
+		return flag;
 	}
 
 	@Override
@@ -220,9 +212,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		ArrayList<FotoBean> listado = null;
 		Map<String, Object> mapx = new HashMap<String, Object>();
 		mapx.put("id", id);
-		mapx.put("id_album", id_album);		
-		try {		
-			listado =  (ArrayList<FotoBean>)session.selectList("s.SQL_CARGAR_FOTOS_X_GALERIA", mapx);		
+		mapx.put("id_album", id_album);
+		try {
+			listado = (ArrayList<FotoBean>) session.selectList("s.SQL_CARGAR_FOTOS_X_GALERIA", mapx);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -236,10 +228,10 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		SqlSession session = sqlMapper.openSession();
 		EstadoBean esb = null;
 		int id = 0;
-		try {		
+		try {
 			session.insert("s.SQL_LIKE", bean);
 			id = bean.getEstado_like().getEstadoId();
-			esb = (EstadoBean)session.selectOne("s.SQL_CARGAR_ESTADO_LIKE",id);			
+			esb = (EstadoBean) session.selectOne("s.SQL_CARGAR_ESTADO_LIKE", id);
 			session.commit();
 
 		} catch (Exception e) {
@@ -255,10 +247,10 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		SqlSession session = sqlMapper.openSession();
 		EstadoBean esb = null;
 		int id = 0;
-		try {		
+		try {
 			session.insert("s.SQL_DISLIKE", bean);
 			id = bean.getEstado_like().getEstadoId();
-			esb = (EstadoBean)session.selectOne("s.SQL_CARGAR_ESTADO_LIKE",id);			
+			esb = (EstadoBean) session.selectOne("s.SQL_CARGAR_ESTADO_LIKE", id);
 			session.commit();
 
 		} catch (Exception e) {
@@ -274,8 +266,8 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	public ArrayList<UsuarioBean> BuscarAmigos(String term) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<UsuarioBean> listado = null;
-		try {		
-			listado =  (ArrayList<UsuarioBean>)session.selectList("s.SQL_BUSCAR_AMIGOS",term);		
+		try {
+			listado = (ArrayList<UsuarioBean>) session.selectList("s.SQL_BUSCAR_AMIGOS", term);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -289,13 +281,13 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	public UsuarioBean BuscarUsuario(int id) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		UsuarioBean u = null;
-		try {		
-			u = (UsuarioBean)session.selectOne("s.SQL_BUSCAR_USUARIO",id);			
+		try {
+			u = (UsuarioBean) session.selectOne("s.SQL_BUSCAR_USUARIO", id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
-		}			
+		}
 		return u;
 	}
 
@@ -304,33 +296,33 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		SqlSession session = sqlMapper.openSession();
 		EstadoBean esb = null;
 		int id = 0;
-		try {		
-			session.insert("s.SQL_NUEVO_COMENTARIO",bean);
+		try {
+			session.insert("s.SQL_NUEVO_COMENTARIO", bean);
 			id = bean.getEstado_comentario().getEstadoId();
-			esb = (EstadoBean)session.selectOne("s.SQL_CARGAR_ESTADO_LIKE", id);
-			session.commit();			
+			esb = (EstadoBean) session.selectOne("s.SQL_CARGAR_ESTADO_LIKE", id);
+			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-		return esb;	
+		return esb;
 	}
 
 	@Override
 	public AmistadBean ValidarAmistad(int u, int a) throws Exception {
 		SqlSession session = sqlMapper.openSession();
-		Map<String, Object> mapx = new HashMap<String, Object>();		
+		Map<String, Object> mapx = new HashMap<String, Object>();
 		mapx.put("u", u);
 		mapx.put("a", a);
 		AmistadBean x = null;
-		try {		
-			x = (AmistadBean)session.selectOne("s.SQL_VALIDAR_AMISTAD",mapx);			
+		try {
+			x = (AmistadBean) session.selectOne("s.SQL_VALIDAR_AMISTAD", mapx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
-		}			
+		}
 		return x;
 	}
 
@@ -339,43 +331,42 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		SqlSession session = sqlMapper.openSession();
 		Map<String, Object> mapx = new HashMap<String, Object>();
 		mapx.put("u", u);
-		mapx.put("a", a);		
+		mapx.put("a", a);
 		mapx.put("flag", flag);
 		int x = 0;
-		try {		
-			x = session.insert("s.SQL_ENVIAR_SOLICITUD_AMISTAD",mapx);	
+		try {
+			x = session.insert("s.SQL_ENVIAR_SOLICITUD_AMISTAD", mapx);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
-		}			
+		}
 		return x;
 	}
 
 	@Override
 	public int CancelarSolicitudAmistad(AmistadBean bean) throws Exception {
-		SqlSession session = sqlMapper.openSession();		
+		SqlSession session = sqlMapper.openSession();
 		int x = 0;
-		try {		
-			x = session.delete("s.SQL_CANCELAR_SOLICITUD_AMISTAD", bean);	
+		try {
+			x = session.delete("s.SQL_CANCELAR_SOLICITUD_AMISTAD", bean);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
-		}			
+		}
 		return x;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")	
-	public ArrayList<AmistadBean> BuscarSolicitudesAmistad(int id)
-			throws Exception {
+	@SuppressWarnings("unchecked")
+	public ArrayList<AmistadBean> BuscarSolicitudesAmistad(int id) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<AmistadBean> listado = null;
-		try {		
-			listado =  (ArrayList<AmistadBean>)session.selectList("s.SQL_BUSCAR_SOLICITUDES_AMISTAD", id);		
+		try {
+			listado = (ArrayList<AmistadBean>) session.selectList("s.SQL_BUSCAR_SOLICITUDES_AMISTAD", id);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -387,16 +378,16 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	@Override
 	public int AceptarSolicitudAmistad(AmistadBean bean) throws Exception {
-		SqlSession session = sqlMapper.openSession();		
+		SqlSession session = sqlMapper.openSession();
 		int x = 0;
-		try {		
-			x = session.update("s.SQL_ACEPTAR_SOLICITUD_AMISTAD", bean);	
+		try {
+			x = session.update("s.SQL_ACEPTAR_SOLICITUD_AMISTAD", bean);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
-		}			
+		}
 		return x;
 	}
 
@@ -405,8 +396,8 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	public ArrayList<AmistadBean> CargarDirectorio(int id) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<AmistadBean> listado = null;
-		try {		
-			listado =  (ArrayList<AmistadBean>)session.selectList("s.SQL_CARGAR_DIRECTORIO", id);		
+		try {
+			listado = (ArrayList<AmistadBean>) session.selectList("s.SQL_CARGAR_DIRECTORIO", id);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -417,13 +408,12 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")	
-	public ArrayList<ComentarioFotoBean> CargarComentariosFoto(int id)
-			throws Exception {
+	@SuppressWarnings("unchecked")
+	public ArrayList<ComentarioFotoBean> CargarComentariosFoto(int id) throws Exception {
 		SqlSession session = sqlMapper.openSession();
 		ArrayList<ComentarioFotoBean> listado = null;
-		try {		
-			listado =  (ArrayList<ComentarioFotoBean>)session.selectList("s.SQL_CARGAR_COMENTARIOS_FOTO",id);		
+		try {
+			listado = (ArrayList<ComentarioFotoBean>) session.selectList("s.SQL_CARGAR_COMENTARIOS_FOTO", id);
 			return listado;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -434,18 +424,97 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	}
 
 	@Override
-	public int NuevoComentarioFoto(ComentarioFotoBean bean) throws Exception {		
-		SqlSession session = sqlMapper.openSession();		
+	public int NuevoComentarioFoto(ComentarioFotoBean bean) throws Exception {
+		SqlSession session = sqlMapper.openSession();
 		int vr = 0;
 		try {
 			vr = session.insert("s.SQL_NUEVO_COMENTARIO_FOTO", bean);
-			session.commit();			
+			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
 		return vr;
+	}
 
-	}	
+	@Override
+	@SuppressWarnings("unchecked")
+	public int ContarAmigos(int id) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		ArrayList<AmistadBean> listado;
+		int n = 0;
+		try {
+			listado = (ArrayList<AmistadBean>) session.selectList("s.SQL_CONTAR_AMIGOS", id);
+			n = listado.size();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return n;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public int ContarEstados(int id) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		ArrayList<EstadoBean> listado;
+		int n = 0;
+		try {
+			listado = (ArrayList<EstadoBean>) session.selectList("s.SQL_CONTAR_ESTADOS", id);
+			n = listado.size();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return n;
+	}
+
+	@Override
+	public int EditarPerfil(UsuarioBean bean) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		int flag = 0;
+		try {
+			flag = session.update("s.SQL_EDITAR_PERFIL", bean);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return flag;
+	}
+
+	@Override
+	public int ValidarPassword(UsuarioBean bean) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		UsuarioBean x = null;
+		int flag = 0;
+		try {
+			x = (UsuarioBean) session.selectOne("s.SQL_VALIDAR_PASSWORD", bean);
+			flag = (x != null)? 1:0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return flag;
+	}
+
+	@Override
+	public int CambiarPassword(UsuarioBean bean) throws Exception {
+		SqlSession session = sqlMapper.openSession();
+		int flag = 0;
+		try {
+			flag = session.update("s.SQL_CAMBIAR_PASSWORD", bean);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return flag;
+	}
 }

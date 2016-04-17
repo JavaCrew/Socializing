@@ -163,6 +163,13 @@
 						}
 						$(data).html(cadena_html);
 					});
+
+	$.subscribe('tpConteo', function(event, data) {
+		var num_estados = event.originalEvent.data.num_estados;
+		var num_amigos = event.originalEvent.data.num_amigos;
+		$("#cMindBits").text(num_estados);
+		$("#cAmigos").text(num_amigos);
+	});
 </script>
 <s:push value="#session.logged">
 	<div class="row">
@@ -190,17 +197,29 @@
 					</a>
 				</div>
 				<div class="weather-category twt-category">
-					<ul>
-						<li class="active">
-							<h5>320</h5> Mindbits
-						</li>
-						<li>
-							<h5>1245</h5> Amigos
-						</li>
-						<li>
-							<h5>24657</h5> Seguidores
-						</li>
-					</ul>
+					<s:url id="uConteo" value="conteo" />
+					<jq:div id="rConteo" href="%{uConteo}" indicator="indicator"
+						dataType="json" onSuccessTopics="tpConteo">
+						<center>
+							<i id="indicator"
+								class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+						</center>
+						<ul>
+							<li class="active">
+								<h5>
+									<span id="cMindBits"></span>
+								</h5> Mindbits
+							</li>
+							<li>
+								<h5>
+									<span id="cAmigos"></span>
+								</h5> Amigos
+							</li>
+							<li>
+								<h5>0</h5> Seguidores
+							</li>
+						</ul>
+					</jq:div>
 				</div>
 				<s:form id="fMindbit" method="POST" action="nuevoEstado">
 					<div class="twt-write col-sm-12">
@@ -239,8 +258,11 @@
 			<jq:div id="rCargarEstadosAmigos" href="%{uCargarEstadosAmigos}"
 				indicator="indicator" dataType="json"
 				onSuccessTopics="tpEstadosAmigos">
-				<i id="indicator"
-					class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+				<center>
+					<i id="indicator"
+						class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i> <br>
+					ESPERA, ESTAMOS CARGANDO TUS MINBITS ...
+				</center>
 			</jq:div>
 		</aside>
 	</div>

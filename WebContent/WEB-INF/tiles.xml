@@ -27,5 +27,11 @@
 	</definition>
 	<definition name="t_albumes" extends="t_main">
 		<put-attribute name="content" value="/pages/album.jsp" />
-	</definition>		
+	</definition>
+	<definition name="t_edicion" extends="t_main">
+		<put-attribute name="content" value="/pages/edicion.jsp" />
+	</definition>
+	<definition name="t_cambio_password" extends="t_main">
+		<put-attribute name="content" value="/pages/cambio_pwd.jsp" />
+	</definition>
 </tiles-definitions>

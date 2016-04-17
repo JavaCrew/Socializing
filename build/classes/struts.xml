@@ -17,7 +17,8 @@
 			<result name="auto_perfil" type="tiles">t_auto_perfil</result>
 			<result name="amigos" type="tiles">t_amigos</result>
 			<result name="fotos" type="tiles">t_fotos</result>
-			<result name="edicion" type="tiles">t_edicion</result>
+			<result name="edicion" type="tiles">t_edicion</result>			
+			<result name="cambio_password" type="tiles">t_cambio_password</result>
 		</action>
 		<action name="subirFotoPerfil" class="com.socializing.actions.FotoAction">
 			<interceptor-ref name="basicStack" />

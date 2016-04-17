@@ -36,7 +36,8 @@ import com.socializing.services.UsuarioServiceImp;
 @ParentPackage(value = "s")
 @SuppressWarnings("rawtypes")
 @InterceptorRefs({ @InterceptorRef(value = "json", params = { "enableSMD", "true" }),
-		@InterceptorRef("jsonValidationWorkflowStack"), @InterceptorRef("fileUpload"), @InterceptorRef("defaultStack")})
+		@InterceptorRef("jsonValidationWorkflowStack"), @InterceptorRef("fileUpload"),
+		@InterceptorRef("defaultStack") })
 public class UsuarioAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private static final Log log = LogFactory.getLog(UsuarioAction.class);
@@ -74,6 +75,10 @@ public class UsuarioAction extends ActionSupport {
 	private String nombre_album;
 	private String term;
 	private int flag;
+	private int num_amigos;
+	private int num_estados;
+	private int flag2;
+	
 
 	@Action(value = "/login", results = { @Result(location = "t_inicio", name = "success", type = "tiles"),
 			@Result(location = "/index.jsp", name = "login") })
@@ -177,7 +182,7 @@ public class UsuarioAction extends ActionSupport {
 	}
 
 	@Action(value = "/nuevoEstado", results = { @Result(name = "success", location = "t_inicio", type = "tiles"),
-			@Result(name = "invalid.token", location = "t_inicio", type="tiles") })
+			@Result(name = "invalid.token", location = "t_inicio", type = "tiles") })
 	public String NuevoEstado() throws Exception {
 		log.info("En NuevoEstado - USUARIOACTION");
 		service.NuevoEstado(e);
@@ -285,6 +290,31 @@ public class UsuarioAction extends ActionSupport {
 		log.info("En BuscarSolicitudAmistad - USUARIOACTION");
 		UsuarioBean x = (UsuarioBean) session.get("logged");
 		lista_solicitudes_amistad = service.BuscarSolicitudesAmistad(x.getUsuarioId());
+		return SUCCESS;
+	}
+
+	@Action(value = "/conteo", results = { @Result(name = "success", type = "json") })
+	public String ConteoAmigos() throws Exception {
+		log.info("En Conteo Amigos - USUARIOACTION");
+		UsuarioBean bean = (UsuarioBean) session.get("logged");
+		num_amigos = service.ContarAmigos(bean.getUsuarioId());
+		num_estados = service.ContarEstados(bean.getUsuarioId());
+		return SUCCESS;
+	}
+
+	@Action(value = "/editarPerfil", results = { @Result(name = "success", type = "tiles", location = "t_inicio") })
+	public String EditarPerfil() throws Exception {
+		log.info("En EditarPerfil - USUARIOACTION");
+		service.EditarPerfil(u);
+		session.put("logged", u);
+
+		return SUCCESS;
+	}
+
+	@Action(value = "/validarPassword", results = { @Result(name = "success", type = "json") })
+	public String ValidarPassword() throws Exception {
+		log.info("En Validar Password - USUARIOACTION");
+		flag2 = service.ValidarPassword(u);
 		return SUCCESS;
 	}
 
@@ -526,5 +556,29 @@ public class UsuarioAction extends ActionSupport {
 
 	public void setCf(ComentarioFotoBean cf) {
 		this.cf = cf;
+	}
+
+	public int getNum_amigos() {
+		return num_amigos;
+	}
+
+	public void setNum_amigos(int num_amigos) {
+		this.num_amigos = num_amigos;
+	}
+
+	public int getNum_estados() {
+		return num_estados;
+	}
+
+	public void setNum_estados(int num_estados) {
+		this.num_estados = num_estados;
+	}
+
+	public int getFlag2() {
+		return flag2;
+	}
+
+	public void setFlag2(int flag2) {
+		this.flag2 = flag2;
 	}
 }

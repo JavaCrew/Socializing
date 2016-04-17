@@ -26,6 +26,12 @@ public class LinkAction extends ActionSupport{
 		log.info("INICIO");
 		return "inicio";		
 	}
+	
+	public String cambio_password()
+	{
+		log.info("CAMBIO PASSWORD");
+		return "cambio_password";		
+	}
 
 	public String perfil()
 	{
